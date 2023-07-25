@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Kimi&#39;s Blog</title>
+    <link>https://blog.kimi360.top/</link>
+    
+    <atom:link href="https://blog.kimi360.top/rss.xml" rel="self" type="application/rss+xml"/>
+    
+    <description></description>
+    <pubDate>Tue, 17 Jan 2023 01:33:05 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>为博客添加赞助按钮遇到的坑</title>
+      <link>https://blog.kimi360.top/0a150ad679fb/</link>
+      <guid>https://blog.kimi360.top/0a150ad679fb/</guid>
+      <pubDate>Tue, 10 Jan 2023 00:47:47 GMT</pubDate>
+      
+      <description>&lt;p&gt;最近在github上找到了一款比较合适的赞助页面 &lt;a href=&quot;https://github.com/Kaiyuan/sponsor-page&quot;&gt;Kaiyuan/sponsor-page&lt;/a&gt; ，就想着将它添加到博客文章的底部。万万没想到，大坑正在等着我。</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>最近在github上找到了一款比较合适的赞助页面 <a href="https://github.com/Kaiyuan/sponsor-page">Kaiyuan/sponsor-page</a> ，就想着将它添加到博客文章的底部。万万没想到，大坑正在等着我。<span id="more"></span></p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>其实我最早看中的是原版页面的Simple样式，为了更符合自己的需求，我做了一些调整工作：</p><ul><li>去除Paypal以及bitcoin的按钮。</li><li>因调整页面的CSS居中赞助按钮。</li><li>调整github图标位置适配赞助按钮。</li><li>Simple样式的背景图居中并调正。</li><li>替换Drinks样式的咖啡图标。</li><li>调整Drinks样式的模糊值。</li><li>添加站点图标及robots.txt文件。</li><li>制作成Docker镜像方便部署，镜像地址: <a href="https://hub.docker.com/r/kimi360/sponsor">kimi360/sponsor</a>  。</li></ul><p>去除Paypal以及bitcoin按钮主要考虑以下几个方面:</p><ol><li>Paypal的按钮为连接形式，点击后会页面跳转，体验上与其他按钮风格不一致。</li><li>Paypal的按钮为连接形式，制作成Docker镜像启动时需要脚本处理替换连接信息。</li><li>Paypal跳转后的连接中包含个人姓名及地区，会造成个人信息的泄露。</li><li>Paypal及bitcoin在国内使用的也相对较少。</li></ol><p>使用Docker进行部署后，就可以使用iframe嵌入到我们的博客中了。</p><h2 id="嵌入页面"><a href="#嵌入页面" class="headerlink" title="嵌入页面"></a>嵌入页面</h2><p>我们可以在写作每篇文章的最后加上我们的iframe，这是最简单的方式。更为稳妥的方式当然是将赞助按钮加入到我们博客主题的模板中。</p><p>Hexo 主题结构通常如下所示：</p><pre><code class="test">theme folder├── languages    // 多语言文件夹├── layout        // 页面文件├── source        // 资源文件└── _config.yml    // 主题配置文件</code></pre><p>我们从页面文件开始入手</p><p>先在 <code>themes\hexo-theme-aomori\layout\_partial\post</code> 下新建 <code>sponsor.ejs</code> 文件。添加如下内容：</p><pre><code class="xml">&lt;% if (post.layout !== &#39;tweet&#39;) &#123; %&gt;    &lt;div class=&quot;article-sponsor&quot;&gt;        &lt;iframe src=&quot;http[s]://赞助页地址&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;    &lt;/div&gt;&lt;% &#125; %&gt;</code></pre><p>修改 <code>themes\hexo-theme-aomori\layout\_partial</code> 下的 <code>article.ejs</code> 文件。搜索关键字 <code>post.content</code> ，在下面新增代码引入 <code>sponsor.ejs</code> 文件。</p><pre><code class="xml">&lt;div class=&quot;article-entry post-inner-html hairline&quot; itemprop=&quot;articleBody&quot;&gt;    &lt;%- post.content %&gt;    &lt;!--引入 `sponsor.ejs` 文件--&gt;    &lt;%- partial(&#39;post/sponsor&#39;) %&gt; &lt;/div&gt;</code></pre><p>接下来调整一下CSS</p><p>修改 <code>themes\hexo-theme-aomori\source\stylesheets</code> 下的 <code>style.scss</code> 文件，新增样式</p><pre><code class="css">        .article-sponsor &#123;            padding: 0;            position: relative;            iframe&#123;                overflow-x:hidden;                overflow-y:hidden;                border:0px none #fff;                min-height:240px;                width:100%;            &#125;        &#125;</code></pre><p>保存所有文件，<code>hexo g</code> 生成一下页面，预览……</p><h2 id="遇到坑了"><a href="#遇到坑了" class="headerlink" title="遇到坑了"></a>遇到坑了</h2><p>页面生成倒是没有什么问题，<code>hexo server</code> 预览一下…屁都没有，这是什么情况？</p><ul><li>F12检查一下页面元素，能够查看到 iframe 代码，那么文件引入应该没有问题。</li><li>清空 <code>sponsor.ejs</code> 内容，只插入 iframe 代码，赞助按钮显示，问题也不在iframe代码上。</li><li><code>sponsor.ejs</code> 在只有 iframe 的基础上套上 div ，赞助按钮不显示。</li><li><code>sponsor.ejs</code> 去除 <code>class=&quot;article-sponsor&quot;</code> ，赞助按钮显示。</li><li><code>class=&quot;article-sponsor&quot;</code> 修改为 <code>class=&quot;article-copyright&quot;</code> ，赞助按钮显示。</li></ul><p>看起来是CSS的锅。</p><h3 id="坑1"><a href="#坑1" class="headerlink" title="坑1"></a>坑1</h3><p>F12重新看看下载的CSS文件是否有问题，发现站点使用只使用了 <code>build.css</code> 和 <code>custom.css</code> 。研究了一番，原来 <code>style.scss</code> 是通过 <code>gulp</code> 压缩生成 <code>custom.css</code>。</p><p>进入主题目录，执行 <code>npm install</code> 后执行 <code>gulp css</code> 。 <code>custom.css</code> 顺利生成。</p><h3 id="坑2"><a href="#坑2" class="headerlink" title="坑2"></a>坑2</h3><p>应该没问题了吧 <code>hexo g</code> 生成一下页面，预览……有毒有毒。</p><p>谷歌关键词 <code>加上class后元素消失</code> 后看到这篇文章：<a href="https://blog.csdn.net/u013938484/article/details/52163343">HTML页面元素消失问题</a> 。</p><p>试着把我的 adguard 临时关闭，万万没想到按钮出来了。搞到最后是广告过滤器的锅。</p><h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>既然找到了原因,修改一下类名就好了。比如 <code>class=&quot;article-donate&quot;</code> 。</p><h2 id="问题反思"><a href="#问题反思" class="headerlink" title="问题反思"></a>问题反思</h2><p>其实这个问题的原因在调整 <code>div</code> 的 <code>class</code> 的时候就应该想到的。这也告诉我们在排查问题的时候除了排查代码本身的问题外也不能忽视一些外部存在的因素。如果最开始的时候换成没有安装广告过滤插件的浏览器进行排查也有可能会更快的找到这个问题的原因。感谢看完这篇文章，喜欢的话可以 <code>给作者一杯咖啡</code> 。</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.kimi360.top/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</category>
+      
+      
+      
+      <comments>https://blog.kimi360.top/0a150ad679fb/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Nginx编译找不到OpenSSL library</title>
+      <link>https://blog.kimi360.top/2e04a82fe9f6/</link>
+      <guid>https://blog.kimi360.top/2e04a82fe9f6/</guid>
+      <pubDate>Mon, 02 Jan 2023 12:15:57 GMT</pubDate>
+      
+      <description>&lt;h2 id=&quot;基本情况&quot;&gt;&lt;a href=&quot;#基本情况&quot; class=&quot;headerlink&quot; title=&quot;基本情况&quot;&gt;&lt;/a&gt;基本情况&lt;/h2&gt;&lt;p&gt;因为需要使用https模块，因此在编译Nginx时添加了–with-http_ssl_module。结果编译过程中报错。&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="基本情况"><a href="#基本情况" class="headerlink" title="基本情况"></a>基本情况</h2><p>因为需要使用https模块，因此在编译Nginx时添加了–with-http_ssl_module。结果编译过程中报错。</p><span id="more"></span><pre><code class="bash">checking for OpenSSL library ... not foundchecking for OpenSSL library in /usr/local/ ... not foundchecking for OpenSSL library in /usr/pkg/ ... not foundchecking for OpenSSL library in /opt/local/ ... not found./configure: error: SSL modules require the OpenSSL library.You can either do not enable the modules, or install the OpenSSL libraryinto the system, or build the OpenSSL library statically from the sourcewith nginx by using --with-openssl=&lt;path&gt; option.</code></pre><p>可是openssl-devel已经安装了，通过rpm命令也能找到</p><pre><code class="bash">[root@fc-proxy nginx-1.23.3]# which openssl/usr/bin/openssl[root@fc-proxy nginx-1.23.3]# rpm -qa | grep opensslopenssl-1.0.2k-25.el7_9.x86_64openssl-libs-1.0.2k-25.el7_9.x86_64openssl-devel-1.0.2k-25.el7_9.x86_64</code></pre><p>谷歌得到的答案大多数归结于两点：</p><ul><li>没安装openssl-devel, 可是我已经装了呀</li><li>编译安装openssl并指定路径，nginx编译时添加–with-openssl，可是我已经装了呀，为啥要再装一次</li></ul><h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>直到看到这篇文章：<a href="https://www.jianshu.com/p/ed4a66be0c8a">nginx升级及遇到的问题error: SSL modules解决方法</a></p><p>看起来应该是编译时一些文件没有找到，通过find命令查找一下 <code>ssl.h</code> , <code>libssl.a</code> , <code>libcrypto.a</code> 这几个文件</p><pre><code class="bash">[root@fc-proxy nginx-1.23.3]# find / -name ssl.h/root/openssl-1.1.1q/include/openssl/ssl.h/usr/include/openssl/ssl.h/usr/local/include/openssl/ssl.h[root@fc-proxy lib]# find / -name libssl.a                              /root/openssl-1.1.1q/libssl.a/usr/local/lib64/libssl.a[root@fc-proxy lib]# find / -name libcrypto.a/root/openssl-1.1.1q/libcrypto.a/usr/local/lib64/libcrypto.a</code></pre><p>看起来相关的文件都在 <code>/root/openssl-1.1.1q</code> ，编译时添加<code>--with-http_ssl_module=/root/openssl-1.1.1q</code></p><pre><code class="bash">[root@fc-proxy nginx-1.23.3]# ./configure --with-http_ssl_module --with-openssl=/root/openssl-1.1.1q……[root@fc-proxy nginx-1.23.3]# make&amp;&amp; make install……</code></pre><p>顺利编译通过，问题解决。</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.kimi360.top/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</category>
+      
+      
+      
+      <comments>https://blog.kimi360.top/2e04a82fe9f6/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Linux使用proxychains-ng代理应用</title>
+      <link>https://blog.kimi360.top/e2efe6bded91/</link>
+      <guid>https://blog.kimi360.top/e2efe6bded91/</guid>
+      <pubDate>Thu, 20 Oct 2022 07:21:33 GMT</pubDate>
+      
+      <description>&lt;h2 id=&quot;基本情况&quot;&gt;&lt;a href=&quot;#基本情况&quot; class=&quot;headerlink&quot; title=&quot;基本情况&quot;&gt;&lt;/a&gt;基本情况&lt;/h2&gt;&lt;p&gt;公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。</description>
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="基本情况"><a href="#基本情况" class="headerlink" title="基本情况"></a>基本情况</h2><p>公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。<span id="more"></span>因此在互联网出口侧设置了一台前置机，部署了tinyproxy代理程序。当内部服务器需要访问公网地址时，设置环境变量http_proxy指定代理到固定服务器，通过固定服务器再端口转发至代理服务器。</p><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>开发在调试外部公网接口过程中发现虽然设置了代理，但是还是无法调用到公网的接口。</p><h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><ul><li>查看应用日志提示:java.net.ConnectException: Connection refused (Connection refused)</li><li>使用Curl命令测试接口地址可以正常返回状态码。</li><li>查看代理服务器日志发现调用公网接口时未产生新的日志。</li></ul><p>很明显，应用在调用公网接口时并应用没有正常走到代理服务器上去。也就是说linux环境变量设置的代理并非全局代理，需要强制应用使用指定应用的代理服务器。</p><h2 id="寻求方案"><a href="#寻求方案" class="headerlink" title="寻求方案"></a>寻求方案</h2><ul><li>参考：<a href="https://www.cnblogs.com/ibigboy/p/11251435.html">Java网络和代理</a> 设置了JVM启动参数后测试无效。</li><li>参考：<a href="https://blog.lanweihong.com/posts/49517/">Linux环境下使用ProxyChains设置代理上网</a> 进行设置。有效！</li></ul><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>ProxyChains 是一款适用于linux系统的网络代理设置工具。强制由任一程序发起的TCP连接请求必须通过诸如TOR 或 SOCKS4, SOCKS5 或HTTP(S) 代理。允许TCP和DNS通过代理隧道，并且可配置多个代理。配置完成后只需在运行的命令之前加上proxychains4就可以通过代理进行网络访问了。</p><p>proxychains新的版本已经称为proxychains-ng。项目地址: <a href="https://github.com/rofl0r/proxychains-ng">https://github.com/rofl0r/proxychains-ng</a></p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>下载最新的proxychains-ng版本,解压后编译安装</p><pre><code class="bash">tar -xvf proxychains-ng-4.16.tar.xz cd proxychains-ng-4.16./configure makemake installcp src/proxychains.conf  /etc/</code></pre><h2 id="配置及使用"><a href="#配置及使用" class="headerlink" title="配置及使用"></a>配置及使用</h2><ul><li>配置文件的位置为/etc/proxychains.conf。</li><li>配置文件中localnet开头为不走代理的本地地址，根据你的实际需求取消这些行的注释</li><li>配置文件最后加上你的代理服务器信息<blockquote><p>格式:</p><p>socks5/socks4/http  [IP]  [Port]  [UserName]  [Password]</p></blockquote></li></ul><p>设置完成后在应用启动命令之前加上proxychains4。所有问题完美解决</p>]]></content:encoded>
+      
+      
+      <category domain="https://blog.kimi360.top/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</category>
+      
+      
+      
+      <comments>https://blog.kimi360.top/e2efe6bded91/#disqus_thread</comments>
+      
+    </item>
+    
+  </channel>
+</rss>
