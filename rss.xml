@@ -9,8 +9,29 @@
     <atom:link href="https://blog.kimi360.top/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 27 Jul 2023 04:14:06 GMT</pubDate>
+    <pubDate>Wed, 16 Aug 2023 02:35:58 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>使用非ROOT用户挂载ossfs</title>
+      <link>https://blog.kimi360.top/97ec19e32872/</link>
+      <guid>https://blog.kimi360.top/97ec19e32872/</guid>
+      <pubDate>Wed, 16 Aug 2023 01:24:19 GMT</pubDate>
+      
+      <description>&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户<span id="more"></span></p><h2 id="挂载文件系统"><a href="#挂载文件系统" class="headerlink" title="挂载文件系统"></a>挂载文件系统</h2><p>下面，我们以 support 账号为例子。看看如何挂载 ossfs 给 support 账号</p><ul><li>进入 <a href="https://help.aliyun.com/zh/oss/developer-reference/ossfs-installation?spm=a2c4g.11186623.0.0.2f0c72848W6LsH#concept-kkp-lmb-wdb">阿里云帮助中心</a> 下载最新的ossfs安装包</li><li>安装依赖以及下载的安装包<pre><code class="bash"># 安装依赖包yum install -y fuse fuse-libsrpm -ivh ossfs_1.91.1_centos7.0_x86_64.rpm </code></pre></li><li>配置账号访问信息<pre><code class="bash">echo BucketName:yourAccessKeyId:yourAccessKeySecret &gt; /etc/passwd-ossfschmod 640 /etc/passwd-ossfschown support:support /etc/passwd-ossfs </code></pre></li><li>查看 support 用户的 <code>UID</code> 和 <code>GID</code> 并记录下来<pre><code class="bash">[root@localhost ~]# id supportuid=1000(support) gid=1000(support) groups=1000(support)</code></pre></li><li>编辑 <code>/etc/fuse.conf</code>, 取消 <code>user_allow_other</code> 前的注释</li><li>切换到 support 用户，挂载 ossfs<pre><code class="bash"># 参数说明# $Bucket     Bucket名# $PATH       实际挂载的路径# $URL        Bucket的Endpoint# $UID        support用户的uid，这里为 1000# $GID        support用户的gid，这里为 1000# $File       passwd-ossfs文件路径,这里为 /etc/passwd-ossfs。/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other</code></pre>到这里我们其实已经可以正常使用该存储空间了，为了确保开机后能自动挂载，我们还需要添加开机自动挂载脚本。</li></ul><h2 id="设置开机启动"><a href="#设置开机启动" class="headerlink" title="设置开机启动"></a>设置开机启动</h2><p>以下的操作以 root 执行，还是以挂载文件给 support 用户为例子。</p><ul><li>创建 <code>/etc/init.d/ossfs</code> 启动脚本（请自行替换文件中的参数）<pre><code class="bash">#! /bin/bash## ossfs      Automount Aliyun OSS Bucket in the specified direcotry.## chkconfig: 2345 90 10# description: Activates/Deactivates ossfs configured to start at boot time.# 开机挂载oss，采用此种方式挂载避免修改/etc/fstab ，导致挂载失败而系统无法启动。# 加 -o allow_other 允许非root用户操作避免因权限问题导致无法操作oss目录su - support -c &quot;/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other&quot;</code></pre></li><li>设置执行权限和开机启动<pre><code class="bash">chmod +x ossfs chkconfig ossfs on</code></pre>设置完成后重启服务器可以看到oss已经正常挂载了，并且 root 用户和 support 用户均能正常访问</li></ul><h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><ul><li>使用root用户卸载挂载目录（以/data/ossfs为例）<pre><code class="bash">umount -l /data/ossfs</code></pre></li><li>使用普通用户卸载挂载目录（以/data/ossfs为例）<pre><code class="bash">fusermount /data/ossfs</code></pre></li></ul>]]></content:encoded>
+      
+      
+      <category domain="https://blog.kimi360.top/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</category>
+      
+      
+      
+      <comments>https://blog.kimi360.top/97ec19e32872/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>Windows下使用密钥管理git账号</title>

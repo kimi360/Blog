@@ -6,30 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     
-    <title>Linux使用proxychains-ng代理应用 | Kimi&#39;s Blog</title>
+    <title>使用非ROOT用户挂载ossfs | Kimi&#39;s Blog</title>
 
-    <meta name="description" content="&lt;h2 id=&#34;基本情况&#34;&gt;&lt;a href=&#34;#基本情况&#34; class=&#34;headerlink&#34; title=&#34;基本情况&#34;&gt;&lt;/a&gt;基本情况&lt;/h2&gt;&lt;p&gt;公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。">
+    <meta name="description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户">
     <meta name="keywords" content="">
 
     
 
     <meta property="og:locale" content="cn" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content= "Linux使用proxychains-ng代理应用 | Kimi&#39;s Blog"  />
-    <meta property="og:description" content= "&lt;h2 id=&#34;基本情况&#34;&gt;&lt;a href=&#34;#基本情况&#34; class=&#34;headerlink&#34; title=&#34;基本情况&#34;&gt;&lt;/a&gt;基本情况&lt;/h2&gt;&lt;p&gt;公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。" />
-    <meta property="og:url" content="https://blog.kimi360.top/e2efe6bded91/index.html" />
+    <meta property="og:title" content= "使用非ROOT用户挂载ossfs | Kimi&#39;s Blog"  />
+    <meta property="og:description" content= "&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户" />
+    <meta property="og:url" content="https://blog.kimi360.top/97ec19e32872/index.html" />
     <meta property="og:site_name" content="" />
     <meta property="article:author" content="KIMI" />
     <meta property="article:publisher" content="" />
-    <meta property="og:description" content="&lt;h2 id=&#34;基本情况&#34;&gt;&lt;a href=&#34;#基本情况&#34; class=&#34;headerlink&#34; title=&#34;基本情况&#34;&gt;&lt;/a&gt;基本情况&lt;/h2&gt;&lt;p&gt;公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。" />
-    <meta name="twitter:title" content="Linux使用proxychains-ng代理应用 | Kimi&#39;s Blog"/>
-    <meta name="twitter:description" content="&lt;h2 id=&#34;基本情况&#34;&gt;&lt;a href=&#34;#基本情况&#34; class=&#34;headerlink&#34; title=&#34;基本情况&#34;&gt;&lt;/a&gt;基本情况&lt;/h2&gt;&lt;p&gt;公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。"/>
+    <meta property="og:description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户" />
+    <meta name="twitter:title" content="使用非ROOT用户挂载ossfs | Kimi&#39;s Blog"/>
+    <meta name="twitter:description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户"/>
     <script type="application/ld+json">
         {
-            "description": "&lt;h2 id=&#34;基本情况&#34;&gt;&lt;a href=&#34;#基本情况&#34; class=&#34;headerlink&#34; title=&#34;基本情况&#34;&gt;&lt;/a&gt;基本情况&lt;/h2&gt;&lt;p&gt;公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。",
+            "description": "&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户",
             "author": { "@type": "Person", "name": "KIMI" },
             "@type": "BlogPosting",
-            "url": "https://blog.kimi360.top/e2efe6bded91/index.html",
+            "url": "https://blog.kimi360.top/97ec19e32872/index.html",
             "publisher": {
             "@type": "Organization",
             "logo": {
@@ -38,11 +38,11 @@
             },
             "name": "KIMI"
             },
-            "headline": "Linux使用proxychains-ng代理应用 | Kimi&#39;s Blog",
-            "datePublished": "2022-10-20T07:21:33.000Z",
+            "headline": "使用非ROOT用户挂载ossfs | Kimi&#39;s Blog",
+            "datePublished": "2023-08-16T01:24:19.000Z",
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "https://blog.kimi360.top/e2efe6bded91/index.html"
+                "@id": "https://blog.kimi360.top/97ec19e32872/index.html"
             },
             "@context": "http://schema.org"
         }
@@ -157,7 +157,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clld3me170005mgjo3ede81dz" class="article article-type-post" itemscope
+    <article id="post-clld3me160004mgjo9u9m56a0" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -173,7 +173,7 @@
             
   
     <h1 class="article-title" itemprop="name">
-      Linux使用proxychains-ng代理应用
+      使用非ROOT用户挂载ossfs
     </h1>
   
 
@@ -183,7 +183,7 @@
         <div class="article-more-info article-more-info-post hairline">
 
             <div class="article-date">
-  <time datetime="2022-10-20T07:21:33.000Z" itemprop="datePublished">2022-10-20</time>
+  <time datetime="2023-08-16T01:24:19.000Z" itemprop="datePublished">2023-08-16</time>
 </div>
 
             
@@ -199,38 +199,62 @@
         </div>
 
         <div class="article-entry post-inner-html hairline" itemprop="articleBody">
-            <h2 id="基本情况"><a href="#基本情况" class="headerlink" title="基本情况"></a>基本情况</h2><p>公司的Linux服务器在私有网络内，因为业务比较敏感，运维部门对各个网络边界进行了安全加固，设置了严格的安全规则。<span id="more"></span>因此在互联网出口侧设置了一台前置机，部署了tinyproxy代理程序。当内部服务器需要访问公网地址时，设置环境变量http_proxy指定代理到固定服务器，通过固定服务器再端口转发至代理服务器。</p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>开发在调试外部公网接口过程中发现虽然设置了代理，但是还是无法调用到公网的接口。</p>
-<h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><ul>
-<li>查看应用日志提示:java.net.ConnectException: Connection refused (Connection refused)</li>
-<li>使用Curl命令测试接口地址可以正常返回状态码。</li>
-<li>查看代理服务器日志发现调用公网接口时未产生新的日志。</li>
-</ul>
-<p>很明显，应用在调用公网接口时并应用没有正常走到代理服务器上去。也就是说linux环境变量设置的代理并非全局代理，需要强制应用使用指定应用的代理服务器。</p>
-<h2 id="寻求方案"><a href="#寻求方案" class="headerlink" title="寻求方案"></a>寻求方案</h2><ul>
-<li>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ibigboy/p/11251435.html">Java网络和代理</a> 设置了JVM启动参数后测试无效。</li>
-<li>参考：<a target="_blank" rel="noopener" href="https://blog.lanweihong.com/posts/49517/">Linux环境下使用ProxyChains设置代理上网</a> 进行设置。有效！</li>
-</ul>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>ProxyChains 是一款适用于linux系统的网络代理设置工具。强制由任一程序发起的TCP连接请求必须通过诸如TOR 或 SOCKS4, SOCKS5 或HTTP(S) 代理。允许TCP和DNS通过代理隧道，并且可配置多个代理。配置完成后只需在运行的命令之前加上proxychains4就可以通过代理进行网络访问了。</p>
-<p>proxychains新的版本已经称为proxychains-ng。项目地址: <a target="_blank" rel="noopener" href="https://github.com/rofl0r/proxychains-ng">https://github.com/rofl0r/proxychains-ng</a></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>下载最新的proxychains-ng版本,解压后编译安装</p>
-<pre><code class="bash">tar -xvf proxychains-ng-4.16.tar.xz 
-cd proxychains-ng-4.16
-./configure 
-make
-make install
-cp src/proxychains.conf  /etc/
+            <p>公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户<span id="more"></span></p>
+<h2 id="挂载文件系统"><a href="#挂载文件系统" class="headerlink" title="挂载文件系统"></a>挂载文件系统</h2><p>下面，我们以 support 账号为例子。看看如何挂载 ossfs 给 support 账号</p>
+<ul>
+<li>进入 <a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/oss/developer-reference/ossfs-installation?spm=a2c4g.11186623.0.0.2f0c72848W6LsH#concept-kkp-lmb-wdb">阿里云帮助中心</a> 下载最新的ossfs安装包</li>
+<li>安装依赖以及下载的安装包<pre><code class="bash"># 安装依赖包
+yum install -y fuse fuse-libs
+rpm -ivh ossfs_1.91.1_centos7.0_x86_64.rpm 
 </code></pre>
-<h2 id="配置及使用"><a href="#配置及使用" class="headerlink" title="配置及使用"></a>配置及使用</h2><ul>
-<li>配置文件的位置为/etc/proxychains.conf。</li>
-<li>配置文件中localnet开头为不走代理的本地地址，根据你的实际需求取消这些行的注释</li>
-<li>配置文件最后加上你的代理服务器信息<blockquote>
-<p>格式:</p>
-<p>socks5/socks4/http  [IP]  [Port]  [UserName]  [Password]</p>
-</blockquote>
+</li>
+<li>配置账号访问信息<pre><code class="bash">echo BucketName:yourAccessKeyId:yourAccessKeySecret &gt; /etc/passwd-ossfs
+chmod 640 /etc/passwd-ossfs
+chown support:support /etc/passwd-ossfs 
+</code></pre>
+</li>
+<li>查看 support 用户的 <code>UID</code> 和 <code>GID</code> 并记录下来<pre><code class="bash">[root@localhost ~]# id support
+uid=1000(support) gid=1000(support) groups=1000(support)
+</code></pre>
+</li>
+<li>编辑 <code>/etc/fuse.conf</code>, 取消 <code>user_allow_other</code> 前的注释</li>
+<li>切换到 support 用户，挂载 ossfs<pre><code class="bash"># 参数说明
+# $Bucket     Bucket名
+# $PATH       实际挂载的路径
+# $URL        Bucket的Endpoint
+# $UID        support用户的uid，这里为 1000
+# $GID        support用户的gid，这里为 1000
+# $File       passwd-ossfs文件路径,这里为 /etc/passwd-ossfs。
+/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other
+</code></pre>
+到这里我们其实已经可以正常使用该存储空间了，为了确保开机后能自动挂载，我们还需要添加开机自动挂载脚本。</li>
+</ul>
+<h2 id="设置开机启动"><a href="#设置开机启动" class="headerlink" title="设置开机启动"></a>设置开机启动</h2><p>以下的操作以 root 执行，还是以挂载文件给 support 用户为例子。</p>
+<ul>
+<li>创建 <code>/etc/init.d/ossfs</code> 启动脚本（请自行替换文件中的参数）<pre><code class="bash">#! /bin/bash
+#
+# ossfs      Automount Aliyun OSS Bucket in the specified direcotry.
+#
+# chkconfig: 2345 90 10
+# description: Activates/Deactivates ossfs configured to start at boot time.
+# 开机挂载oss，采用此种方式挂载避免修改/etc/fstab ，导致挂载失败而系统无法启动。
+# 加 -o allow_other 允许非root用户操作避免因权限问题导致无法操作oss目录
+su - support -c &quot;/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other&quot;
+</code></pre>
+</li>
+<li>设置执行权限和开机启动<pre><code class="bash">chmod +x ossfs 
+chkconfig ossfs on
+</code></pre>
+设置完成后重启服务器可以看到oss已经正常挂载了，并且 root 用户和 support 用户均能正常访问</li>
+</ul>
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><ul>
+<li>使用root用户卸载挂载目录（以/data/ossfs为例）<pre><code class="bash">umount -l /data/ossfs
+</code></pre>
+</li>
+<li>使用普通用户卸载挂载目录（以/data/ossfs为例）<pre><code class="bash">fusermount /data/ossfs
+</code></pre>
 </li>
 </ul>
-<p>设置完成后在应用启动命令之前加上proxychains4。所有问题完美解决</p>
 
             
     <div class="article-donate">
@@ -249,11 +273,7 @@ cp src/proxychains.conf  /etc/
     <h3> 参考文献 </h3>
     
     <p>
-      <a target="_blank" rel="nofollow" href="https://www.cnblogs.com/ibigboy/p/11251435.html">Java网络和代理</a>
-    </p>
-    
-    <p>
-      <a target="_blank" rel="nofollow" href="https://blog.lanweihong.com/posts/49517/">Linux环境下使用ProxyChains设置代理上网</a>
+      <a target="_blank" rel="nofollow" href="https://www.alibabacloud.com/help/zh/oss/how-ossfs-mounts-a-bucket-to-an-ecs-instance-by-using-a-non-root-user">ossfs如何通过非root用户挂载Bucket到ECS实例</a>
     </p>
     
   </div>
@@ -262,7 +282,7 @@ cp src/proxychains.conf  /etc/
     
   <div class="article-copyright hairline">
     <p>
-      本文链接 <a rel="nofollow" href="https://blog.kimi360.top/e2efe6bded91/">https://blog.kimi360.top/e2efe6bded91/</a>
+      本文链接 <a rel="nofollow" href="https://blog.kimi360.top/97ec19e32872/">https://blog.kimi360.top/97ec19e32872/</a>
     </p>
     
     <p>
@@ -276,15 +296,11 @@ cp src/proxychains.conf  /etc/
     
 <nav class="article-nav">
   
-    <a href="../2e04a82fe9f6/" id="article-nav-newer" class="article-nav-link-wrap">
-      <div class="article-nav-caption">下一篇</div>
-      <div class="article-nav-title">
-        
-          Nginx编译找不到OpenSSL library
-        
-      </div>
-    </a>
   
+    <a href="../4c0e267c54ce/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title">Windows下使用密钥管理git账号</div>
+    </a>
   
 </nav>
 
@@ -292,15 +308,15 @@ cp src/proxychains.conf  /etc/
     <section class="share">
         <div class="share-title">分享</div>
         <a class="share-item" target="_blank"
-            href="https://twitter.com/share?text=Linux使用proxychains-ng代理应用 - Kimi's Blog&url=https%3A%2F%2Fblog.kimi360.top%2Fe2efe6bded91%2F">
+            href="https://twitter.com/share?text=使用非ROOT用户挂载ossfs - Kimi's Blog&url=https%3A%2F%2Fblog.kimi360.top%2F97ec19e32872%2F">
             <ion-icon name="logo-twitter"></ion-icon>
         </a>
         <a class="share-item" target="_blank"
-            href="https://www.facebook.com/sharer.php?title=Linux使用proxychains-ng代理应用 - Kimi's Blog&u=https%3A%2F%2Fblog.kimi360.top%2Fe2efe6bded91%2F">
+            href="https://www.facebook.com/sharer.php?title=使用非ROOT用户挂载ossfs - Kimi's Blog&u=https%3A%2F%2Fblog.kimi360.top%2F97ec19e32872%2F">
             <ion-icon name="logo-facebook"></ion-icon>
         </a>
         <!-- <a class="share-item" target="_blank"
-            href="https://service.weibo.com/share/share.php?title=Linux使用proxychains-ng代理应用 - Kimi's Blog&url=https://blog.kimi360.top/e2efe6bded91/&pic=">
+            href="https://service.weibo.com/share/share.php?title=使用非ROOT用户挂载ossfs - Kimi's Blog&url=https://blog.kimi360.top/97ec19e32872/&pic=">
             <div class="n-icon n-icon-weibo"></div>
         </a> -->
     </section>
@@ -379,7 +395,7 @@ cp src/proxychains.conf  /etc/
       <ul>
         
           <li>
-            <a href="../97ec19e32872/">使用非ROOT用户挂载ossfs</a>
+            <a href="">使用非ROOT用户挂载ossfs</a>
           </li>
         
           <li>
@@ -395,7 +411,7 @@ cp src/proxychains.conf  /etc/
           </li>
         
           <li>
-            <a href="">Linux使用proxychains-ng代理应用</a>
+            <a href="../e2efe6bded91/">Linux使用proxychains-ng代理应用</a>
           </li>
         
       </ul>
