@@ -157,7 +157,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clld4p5pp0004akjohwwhepha" class="article article-type-post" itemscope
+    <article id="post-cllewfk0x000430jo80e7cslo" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -225,7 +225,7 @@ uid=1000(support) gid=1000(support) groups=1000(support)
 # $UID        support用户的uid，这里为 1000
 # $GID        support用户的gid，这里为 1000
 # $File       passwd-ossfs文件路径,这里为 /etc/passwd-ossfs。
-/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other
+/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other -o mp_umask=022
 </code></pre>
 到这里我们其实已经可以正常使用该存储空间了，为了确保开机后能自动挂载，我们还需要添加开机自动挂载脚本。</li>
 </ul>
@@ -239,7 +239,7 @@ uid=1000(support) gid=1000(support) groups=1000(support)
 # description: Activates/Deactivates ossfs configured to start at boot time.
 # 开机挂载oss，采用此种方式挂载避免修改/etc/fstab ，导致挂载失败而系统无法启动。
 # 加 -o allow_other 允许非root用户操作避免因权限问题导致无法操作oss目录
-su - support -c &quot;/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other&quot;
+su - support -c &quot;/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other -o mp_umask=022&quot;
 </code></pre>
 </li>
 <li>设置执行权限和开机启动<pre><code class="bash">chmod +x ossfs 
