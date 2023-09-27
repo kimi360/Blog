@@ -157,7 +157,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-clmpxu0ih000160jo8x321y6n" class="article article-type-post" itemscope
+    <article id="post-cln1bd07o0001lgjobxizblmz" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -215,11 +215,13 @@
 <p>然后需要设置github和gitlab，将公钥添加到系统中。</p>
 <p>Windows系统中，在用户的主目录下新建一个.ssh文件夹。将你的私钥放进去，私钥的文件名可以自己重命名</p>
 <p>在.ssh文件夹下新建config文件。用于配置多个密钥(当有多个密钥时可配置多段)</p>
+<p>最后的ProxyCommand用于设置代理</p>
 <pre><code class="test"># Default GitHub
 Host github.com
 HostName github.com
 User git
 IdentityFile ~/.ssh/私钥文件名
+ProxyCommand connect -S 127.0.0.1:1080 -a none %h %p
 </code></pre>
 <p>对于之前已经存在的项目重新使用ssh的方式进行clone就可以正常使用了。</p>
 
