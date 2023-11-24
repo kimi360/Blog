@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+    <title>脚本设置开始菜单显示的文件夹 | Kimi&#39;s Blog</title>
+
+    <meta name="description" content="&lt;p&gt;最近发现了一款pxe网络安装工具iVentoy，可以极大的简化pxe环境的搭建。在测试安装的过程中同时也开启了一件自己一直想做的事情，就是安装完成后使用批处理对新的Windows进行一系列设置以简化初始化流程，减少重装系统的操作成本和时间成本。">
+    <meta name="keywords" content="">
+
+    
+
+    <meta property="og:locale" content="cn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content= "脚本设置开始菜单显示的文件夹 | Kimi&#39;s Blog"  />
+    <meta property="og:description" content= "&lt;p&gt;最近发现了一款pxe网络安装工具iVentoy，可以极大的简化pxe环境的搭建。在测试安装的过程中同时也开启了一件自己一直想做的事情，就是安装完成后使用批处理对新的Windows进行一系列设置以简化初始化流程，减少重装系统的操作成本和时间成本。" />
+    <meta property="og:url" content="https://blog.kimi360.top/97a24c5b2e7e/index.html" />
+    <meta property="og:site_name" content="" />
+    <meta property="article:author" content="KIMI" />
+    <meta property="article:publisher" content="" />
+    <meta property="og:description" content="&lt;p&gt;最近发现了一款pxe网络安装工具iVentoy，可以极大的简化pxe环境的搭建。在测试安装的过程中同时也开启了一件自己一直想做的事情，就是安装完成后使用批处理对新的Windows进行一系列设置以简化初始化流程，减少重装系统的操作成本和时间成本。" />
+    <meta name="twitter:title" content="脚本设置开始菜单显示的文件夹 | Kimi&#39;s Blog"/>
+    <meta name="twitter:description" content="&lt;p&gt;最近发现了一款pxe网络安装工具iVentoy，可以极大的简化pxe环境的搭建。在测试安装的过程中同时也开启了一件自己一直想做的事情，就是安装完成后使用批处理对新的Windows进行一系列设置以简化初始化流程，减少重装系统的操作成本和时间成本。"/>
+    <script type="application/ld+json">
+        {
+            "description": "&lt;p&gt;最近发现了一款pxe网络安装工具iVentoy，可以极大的简化pxe环境的搭建。在测试安装的过程中同时也开启了一件自己一直想做的事情，就是安装完成后使用批处理对新的Windows进行一系列设置以简化初始化流程，减少重装系统的操作成本和时间成本。",
+            "author": { "@type": "Person", "name": "KIMI" },
+            "@type": "BlogPosting",
+            "url": "https://blog.kimi360.top/97a24c5b2e7e/index.html",
+            "publisher": {
+            "@type": "Organization",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://blog.kimi360.topundefined"
+            },
+            "name": "KIMI"
+            },
+            "headline": "脚本设置开始菜单显示的文件夹 | Kimi&#39;s Blog",
+            "datePublished": "2023-11-03T07:01:53.000Z",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://blog.kimi360.top/97a24c5b2e7e/index.html"
+            },
+            "@context": "http://schema.org"
+        }
+    </script>
+
+
+
+
+    
+
+    
+
+    
+
+    
+    <link rel="icon" href="/images/favicon.png">
+    
+
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="../dist/build.css?v=1654266144177.css">
+
+
+    
+<link rel="stylesheet" href="../dist/custom.css?v=1654266144177.css">
+
+
+    <script>
+        window.isPost = true
+        window.aomori = {
+            
+            
+            
+        }
+        window.aomori_logo_typed_animated = false
+        window.aomori_search_algolia = false
+
+    </script>
+
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="rss.xml" title="Kimi's Blog" type="application/rss+xml">
+</head>
+
+<body>
+
+    <div class="container">
+    <header class="header">
+        <div class="header-type">
+            
+            <div class="header-type-inner">
+                
+                    <a class="header-type-title" href="/">Kimi&#39;s Blog</a>
+                
+    
+                
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="header-menu-inner">
+                
+                <a href="../index.html">首页</a>
+                
+                <a href="../archives">存档</a>
+                
+            </div>
+            <div class="header-menu-social">
+                
+    <a class="social" target="_blank" href="https://github.com/kimi360">
+        <ion-icon name="logo-github"></ion-icon>
+    </a>
+
+    <a class="social" target="_blank" href="/rss.xml">
+        <ion-icon name="logo-rss"></ion-icon>
+    </a>
+
+            </div>
+        </div>
+
+        <div class="header-menu-mobile">
+            <div class="header-menu-mobile-inner" id="mobile-menu-open">
+                <i class="icon icon-menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="header-menu-mobile-menu">
+        <div class="header-menu-mobile-menu-bg"></div>
+        <div class="header-menu-mobile-menu-wrap">
+            <div class="header-menu-mobile-menu-inner">
+                <div class="header-menu-mobile-menu-close" id="mobile-menu-close">
+                    <i class="icon icon-cross"></i>
+                </div>
+                <div class="header-menu-mobile-menu-list">
+                    
+                    <a href="../index.html">首页</a>
+                    
+                    <a href="../archives">存档</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        <div class="main">
+            <section class="inner">
+                <section class="inner-main">
+                    <div class="post">
+    <article id="post-clpc14jrl0009a0jo55ux67hy" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+
+<div class="swiper-container article-gallery">
+  <div class="swiper-wrapper">
+    
+      <div class="swiper-slide">
+        <img src="../images/header/photos.setup_start_folder.png" itemprop="image">
+      </div>
+    
+  </div>
+  <!-- 如果需要分页器 -->
+  <div class="swiper-pagination"></div>
+</div>
+
+
+        
+        
+        
+
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      脚本设置开始菜单显示的文件夹
+    </h1>
+  
+
+        </header>
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2023-11-03T07:01:53.000Z" itemprop="datePublished">2023-11-03</time>
+</div>
+
+            
+            <div class="article-category">
+                <a class="article-category-link" href="../categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</a>
+            </div>
+            
+
+            
+
+            
+
+        </div>
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <p>最近发现了一款pxe网络安装工具iVentoy，可以极大的简化pxe环境的搭建。在测试安装的过程中同时也开启了一件自己一直想做的事情，就是安装完成后使用批处理对新的Windows进行一系列设置以简化初始化流程，减少重装系统的操作成本和时间成本。<span id="more"></span></p>
+<p>现在的情况是已经完成大部分的设置的自动化，包括但不限于以下内容：</p>
+<ul>
+<li>未识别的驱动安装、显卡驱动更新</li>
+<li>NAS账号添加、网络磁盘挂载、设置盘符、创建快捷方式</li>
+<li>系统激活、修改主机名、设置环境变量、设置系统盘符、开启远程桌面、其他系统优化</li>
+<li>设置桌面图片、设置开始菜单、设置任务栏、设置资源管理器、设置右键菜单</li>
+<li>自动安装软件、卸载内置应用、设置文件关联、设置开机启动软件</li>
+<li>…</li>
+</ul>
+<p>今天要说明的就是如何使用Powershell脚本设置开始菜单显示的文件夹</p>
+<p>Windows下大部分的设置可以通过注册表去进行，所以在最开始写脚本的时候使用了procmon去监视注册表的操作，直到在设置有哪些文件夹显示在开始菜单的左侧时遇到了以下问题</p>
+<ul>
+<li>监控到的注册表路径是：HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount$de${1843bc7e-7dbe-4826-ae22-037763b69955}$$windows.data.unifiedtile.startglobalproperties\Current，很明显中间的这一段1843bc7e-7dbe-4826-ae22-037763b69955在每次重装后肯定会发生变化。</li>
+<li>监控到的注册表键Data是一个二进制，虽然可以设置整个，但是不知道具体对应的是哪些设置。</li>
+</ul>
+<p>经过网上一系列的资料查找，我找到了以下两种设置方式</p>
+<h2 id="方式1：注册表设置组策略"><a href="#方式1：注册表设置组策略" class="headerlink" title="方式1：注册表设置组策略"></a>方式1：注册表设置组策略</h2><p>这个方法来自这篇文章：<a target="_blank" rel="noopener" href="https://www.alexandrumarin.com/add-or-remove-folders-on-start-list-in-windows-10/">Add or Remove Folders on Start List in Windows 10</a></p>
+<p>文章里使用的是使用注册表设置组策略的方式。</p>
+<pre><code class="windows-registry-entries">Windows Registry Editor Version 5.00
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\current\device\Start]
+“AllowPinnedFolderDocuments”=dword:00000000
+“AllowPinnedFolderDocuments_ProviderSet”=dword:00000001
+“AllowPinnedFolderDownloads”=dword:00000000
+“AllowPinnedFolderDownloads_ProviderSet”=dword:00000001
+“AllowPinnedFolderFileExplorer”=dword:00000000
+“AllowPinnedFolderFileExplorer_ProviderSet”=dword:00000001
+“AllowPinnedFolderMusic”=dword:00000000
+“AllowPinnedFolderMusic_ProviderSet”=dword:00000001
+“AllowPinnedFolderNetwork”=dword:00000000
+“AllowPinnedFolderNetwork_ProviderSet”=dword:00000001
+“AllowPinnedFolderPersonalFolder”=dword:00000000
+“AllowPinnedFolderPersonalFolder_ProviderSet”=dword:00000001
+“AllowPinnedFolderPictures”=dword:00000000
+“AllowPinnedFolderPictures_ProviderSet”=dword:00000001
+“AllowPinnedFolderSettings”=dword:00000000
+“AllowPinnedFolderSettings_ProviderSet”=dword:00000001
+“AllowPinnedFolderVideos”=dword:00000000
+“AllowPinnedFolderVideos_ProviderSet”=dword:00000001
+</code></pre>
+<p>虽然解决了设置的问题，但是也产生了一个很明显的副作用，那就是导入后设置项目会直接置灰，无法再次设置。</p>
+<h2 id="方法2：直接设置注册表"><a href="#方法2：直接设置注册表" class="headerlink" title="方法2：直接设置注册表"></a>方法2：直接设置注册表</h2><p>这个方法来自这篇文章：<a target="_blank" rel="noopener" href="https://github.com/Disassembler0/Win10-Initial-Setup-Script/issues/199">Choose which folders appear on Start</a></p>
+<p>简单来说这个Data的二进制也有固定的格式。帖子里对Data的值做了详细的说明。</p>
+<p>前20字节固定为 <code>02,00,00,00,xx,xx,xx,xx,xx,xx,xx,xx,00,00,00,00,43,42,01,00</code> ，其中xx的地方为时间戳（可能是最后更改的时间戳），这些可以直接从注册表中当前存在的数据中获取，因为它们对于调整的其余部分没有意义。</p>
+<p>接下来的3个字节取决于你是否想在开始菜单显示最近添加的应用，如果想要显示，则可以跳到下一个部分，如果不想要显示，那么接下来的3个字节是 <code>c2,14,01</code> (这部分是在后续设置的时候发现的，帖子中并没有提及) </p>
+<p>接下来取决于你是否想要任何项目。如果不想要，可以直接跳到最后一部分。如果想要，那么接下来的4个字节是 <code>cb,32,0a,yy</code> ，其中yy是显示项目的数量。</p>
+<p>然后链接你想要显示的项目。一个项目始终以05开头，以00结束。</p>
+<ul>
+<li>文件浏览器：05,bc,c9,a8,a4,01,24,8c,ac,03,44,89,85,01,66,a0,81,ba,cb,bd,d7,a8,a4,82,01,00</li>
+<li>设置：05,86,91,cc,93,05,24,aa,a3,01,44,c3,84,01,66,9f,f7,9d,b1,87,cb,d1,ac,d4,01,00</li>
+<li>文档：05,ce,ab,d3,e9,02,24,da,f4,03,44,c3,8a,01,66,82,e5,8b,b1,ae,fd,fd,bb,3c,00</li>
+<li>下载：05,af,e6,9e,9b,0e,24,de,93,02,44,d5,86,01,66,bf,9d,87,9b,bf,8f,c6,d4,37,00</li>
+<li>音乐：05,a0,8c,ac,80,0b,24,d1,fe,01,44,b2,98,01,66,aa,bd,d0,e1,cc,ea,df,b9,15,00</li>
+<li>图片：05,a0,8f,fc,c1,03,24,8a,d0,03,44,80,99,01,66,b0,b5,99,dc,cd,b0,97,de,4d,00</li>
+<li>视频：05,c5,cb,ce,95,04,24,86,fb,01,44,f4,85,01,66,80,c9,ce,d4,af,d9,9e,c4,b5,01,00</li>
+<li>网络：05,c4,82,d6,f3,0f,24,8d,10,44,ae,85,01,66,8b,b5,d3,e9,fe,d2,ed,b1,94,01,00</li>
+<li>个人文件夹：05,ca,e0,f6,a5,07,24,ca,f2,03,44,e8,9e,01,66,8b,ad,8f,c2,f9,a0,87,d4,bc,01,00</li>
+</ul>
+<p>最后的10个字节始终是 <code>c2,3c,01,c2,46,01,c5,5a,01,00</code>。</p>
+<p>帖子在说明了Data二进制内容的同时也让我了解到了如何处理这个变化的注册表路径</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>最后，根据帖子中的内容，我也稍微修改了一下设置开始菜单的函数</p>
+<pre><code class="powershell">Function Start-folder&#123;
+  param([ValidateCount(0,10)][String[]]$itemsToDisplay)
+  $key = Get-ItemProperty &quot;HKCU:\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\*windows.data.unifiedtile.startglobalproperties\Current&quot;
+  $data = $key.Data[0..19] -Join &quot;,&quot;
+  If ($itemsToDisplay.Length -gt 0) &#123;
+    If ($itemsToDisplay -contains &quot;recently&quot;) &#123;
+      $data += &quot;,203,50,10,$($itemsToDisplay.Length)&quot;
+    &#125;else&#123;
+      $data += &quot;,194,20,1,203,50,10,$($itemsToDisplay.Length)&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;explorer&quot;) &#123;
+      $data += &quot;,5,188,201,168,164,1,36,140,172,3,68,137,133,1,102,160,129,186,203,189,215,168,164,130,1,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;settings&quot;) &#123;
+      $data += &quot;,5,134,145,204,147,5,36,170,163,1,68,195,132,1,102,159,247,157,177,135,203,209,172,212,1,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;documents&quot;) &#123;
+      $data += &quot;,5,206,171,211,233,2,36,218,244,3,68,195,138,1,102,130,229,139,177,174,253,253,187,60,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;downloads&quot;) &#123;
+      $data += &quot;,5,175,230,158,155,14,36,222,147,2,68,213,134,1,102,191,157,135,155,191,143,198,212,55,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;music&quot;) &#123;
+      $data += &quot;,5,160,140,172,128,11,36,209,254,1,68,178,152,1,102,170,189,208,225,204,234,223,185,21,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;pictures&quot;) &#123;
+      $data += &quot;,5,160,143,252,193,3,36,138,208,3,68,128,153,1,102,176,181,153,220,205,176,151,222,77,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;videos&quot;) &#123;
+      $data += &quot;,5,197,203,206,149,4,36,134,251,1,68,244,133,1,102,128,201,206,212,175,217,158,196,181,1,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;network&quot;) &#123;
+      $data += &quot;,5,196,130,214,243,15,36,141,16,68,174,133,1,102,139,181,211,233,254,210,237,177,148,1,0&quot;
+    &#125;
+    If ($itemsToDisplay -contains &quot;personal&quot;) &#123;
+      $data += &quot;,5,202,224,246,165,7,36,202,242,3,68,232,158,1,102,139,173,143,194,249,160,135,212,188,1,0&quot;
+    &#125;
+  &#125;
+  $data += &quot;,194,60,1,194,70,1,197,90,1,0&quot;
+  Set-ItemProperty -Path $key.PSPath -Name &quot;Data&quot; -Type Binary -Value $data.Split(&quot;,&quot;)
+&#125;
+#设置开始菜单右侧只显示资源管理器和设置，并且开始菜单隐藏最近添加的应用
+Start-folder explorer,settings
+</code></pre>
+<p>运行结果完美，又可以减少一步重装系统后的操作了🎉</p>
+
+            
+    <div class="article-donate">
+        <iframe src="https://sponsor.kimi360.top/index.html" frameborder="0" scrolling="no"></iframe>
+    </div>
+
+        </div>
+
+    </div>
+    
+
+    
+
+    
+  <div class="article-refer hairline">
+    <h3> 参考文献 </h3>
+    
+    <p>
+      <a target="_blank" rel="nofollow" href="https://www.alexandrumarin.com/add-or-remove-folders-on-start-list-in-windows-10/">Add or Remove Folders on Start List in Windows 10</a>
+    </p>
+    
+    <p>
+      <a target="_blank" rel="nofollow" href="https://github.com/Disassembler0/Win10-Initial-Setup-Script/issues/199">Choose which folders appear on Start</a>
+    </p>
+    
+  </div>
+  
+
+    
+  <div class="article-copyright hairline">
+    <p>
+      本文链接 <a rel="nofollow" href="https://blog.kimi360.top/97a24c5b2e7e/">https://blog.kimi360.top/97a24c5b2e7e/</a>
+    </p>
+    
+    <p>
+      本文采用  <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议 (CC BY-NC-ND 4.0)</a> 进行许可。
+    </p>
+  </div>
+  
+
+    
+
+    
+<nav class="article-nav">
+  
+  
+    <a href="../f81afbfec24f/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title">SecureCRT自动输入二次认证码</div>
+    </a>
+  
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text=脚本设置开始菜单显示的文件夹 - Kimi's Blog&url=https%3A%2F%2Fblog.kimi360.top%2F97a24c5b2e7e%2F">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title=脚本设置开始菜单显示的文件夹 - Kimi's Blog&u=https%3A%2F%2Fblog.kimi360.top%2F97a24c5b2e7e%2F">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title=脚本设置开始菜单显示的文件夹 - Kimi's Blog&url=https://blog.kimi360.top/97a24c5b2e7e/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments">
+    <div class="giscus"></div>
+</section>
+<script src="https://giscus.app/client.js"
+    data-repo="kimi360/kimi360.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkyMzEzMzMzMjc="
+    data-category="Announcements"
+    data-category-id="DIC_kwDODcndz84CTZWa"
+    data-mapping="pathname"
+    data-reactions-enabled="0"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+</script>
+
+
+
+</div>
+                </section>
+            </section>
+
+            
+            <aside class="sidebar ">
+                
+
+
+<div class="widget" id="widget">
+    
+      
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-cate">
+    <div class="widget-title"><span>Categories</span></div>
+    <div class="widget-inner">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-recent-posts">
+    <div class="widget-title"><span>Recent Posts</span></div>
+    <div class="widget-inner">
+      <ul>
+        
+          <li>
+            <a href="">脚本设置开始菜单显示的文件夹</a>
+          </li>
+        
+          <li>
+            <a href="../f81afbfec24f/">SecureCRT自动输入二次认证码</a>
+          </li>
+        
+          <li>
+            <a href="../bc04bb10b5b1/">使用非ROOT用户挂载ossfs</a>
+          </li>
+        
+          <li>
+            <a href="../4c0e267c54ce/">Windows下使用密钥管理git账号</a>
+          </li>
+        
+          <li>
+            <a href="../0a150ad679fb/">为博客添加赞助按钮遇到的坑</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget-wrap widget-archive">
+    <div class="widget-title"><span>Archive</span></div>
+    <div class="widget-inner">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../archives/2023/">2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2022/">2022</a></li></ul>
+    </div>
+  </div>
+
+
+    
+</div>
+
+<div id="backtop"><i class="icon icon-arrow-up"></i></div>
+            </aside>
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#3c4859" fill-opacity="1" d="M0,160L60,181.3C120,203,240,245,360,240C480,235,600,181,720,186.7C840,192,960,256,1080,261.3C1200,267,1320,213,1380,186.7L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+    </div>
+
+    <!-- Please do not remove this -->
+    <!-- 开源不易，请勿删除 -->
+    <div class="footer-wrap">
+        <div class="footer-inner"> 
+            Copyright &copy; 2022 ~ 2023 <a href="https://github.com/kimi360" target="_blank">KIMI</a><br>
+            Powered By <a href="https://hexo.io/" target="_blank">Hexo</a> · Theme By <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Aomori</a>
+        </div>
+    </div>
+
+</footer>
+
+<script type="module" src="https://unpkg.com/ionicons@6.0.2/dist/ionicons/ionicons.esm.js"></script>
+
+
+
+
+
+
+<script src="../dist/build.js?1654266144177.js"></script>
+
+
+<script src="../dist/custom.js?1654266144177.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
