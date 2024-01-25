@@ -9,8 +9,29 @@
     <atom:link href="https://blog.kimi360.top/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Fri, 24 Nov 2023 02:51:14 GMT</pubDate>
+    <pubDate>Thu, 25 Jan 2024 08:37:25 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>使用命令行更新群晖的SSL证书</title>
+      <link>https://blog.kimi360.top/1ad1547eaf1c/</link>
+      <guid>https://blog.kimi360.top/1ad1547eaf1c/</guid>
+      <pubDate>Wed, 24 Jan 2024 08:14:17 GMT</pubDate>
+      
+      <description>&lt;p&gt;最近新学会了一招，使用Cloudflare的Origi 规则将443端口重定向到非标端口上，突破了家宽无法使用443端口的限制。部分没有公网访问需求的服务就解析到了局域网地址，限制只能在局域网或VPN下访问。万万没想到却在证书上遇到了问题。</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>最近新学会了一招，使用Cloudflare的Origi 规则将443端口重定向到非标端口上，突破了家宽无法使用443端口的限制。部分没有公网访问需求的服务就解析到了局域网地址，限制只能在局域网或VPN下访问。万万没想到却在证书上遇到了问题。<span id="more"></span></p><p>正常情况下使用Cloudflare在开启代理的状态下会使用Cloudflare的边缘证书，采取不同的SSL/TLS加密模式，后端完全可以不用操心证书的问题。</p><h2 id="基本情况及需求"><a href="#基本情况及需求" class="headerlink" title="基本情况及需求"></a>基本情况及需求</h2><ul><li>将解析地址设置成了私有地址后，无法开启Cloudflare的代理，这种状态下则需要使用后端自己的SSL证书。</li><li>因为使用自己的域名，访问时会报证书不匹配，需要手动再点击继续访问。</li><li>在VPS上已经使用acme.sh定时申请了通配符证书。</li></ul><p>简单整理一下需求就是群晖需要定期从VPS服务器上取出SSL证书并将更新相关服务的证书</p><h2 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h2><h3 id="第一步，同步证书"><a href="#第一步，同步证书" class="headerlink" title="第一步，同步证书"></a>第一步，同步证书</h3><p>因为VPS的证书会在固定的目录，因此最简单的方式就是直接使用scp命令从固定的路径将证书文件取回到本地。为了避免输入密码，直接配置使用证书登录ssh。</p><h3 id="第二步，更新证书"><a href="#第二步，更新证书" class="headerlink" title="第二步，更新证书"></a>第二步，更新证书</h3><p>我们先进入控制面版，在 安全性 -&gt; 证书 下把我们的通配符证书维护进去。在导入时记得填写描述信息，方便我们后续定位证书位置。</p><p>另外还需要在 安全性 -&gt; 证书 -&gt; 设置 -&gt; 配置 中为相关服务选择正确的证书</p><p>通过网上搜索发现DSM将所有证书信息存放在了/usr/syno/etc/certificate/_archive目录下。在进入这个目录ls看下目录结构</p><pre><code class="shell">root@KIMI-NAS:/usr/syno/etc/certificate/_archive# lltotal 52drwx------ 9 root root 4096 Jan 25 14:25 .drwxr-xr-x 8 root root 4096 Jul 28 21:58 ..drwx------ 2 root root 4096 Dec 11 19:50 1opzpWdrwx------ 2 root root 4096 Jan 23 21:41 Bqb1Sn-rw------- 1 root root    7 May 30  2020 DEFAULTdrwx------ 2 root root 4096 Jan  9  2023 FDutGedrwx------ 2 root root 4096 Dec 19 09:04 FS7mk5drwx------ 2 root root 4096 Jan 24 15:15 GMZqWq-rw------- 1 root root 3982 Jan 25 14:25 INFOdrwx------ 2 root root 4096 May  1  2022 r6JawJ-rwx------ 1 root root 2676 Jan 25 14:25 SERVICES-rw-r--r-- 1 root root   41 Jan 24 15:15 .syno-ca-cert.srldrwx------ 2 root root 4096 Dec 19 09:05 Thberdroot@KIMI-NAS:/usr/syno/etc/certificate/_archive#</code></pre><p>看起来证书就在这些文件夹下，如何定位到我们新维护进去的证书呢？聪明的你一定发现了下面有个INFO证书，cat一下</p><pre><code class="shell">root@KIMI-NAS:/usr/syno/etc/certificate/_archive# cat INFO&#123;   &quot;1opzpW&quot; : &#123;      ...   &#125;,   &quot;Bqb1Sn&quot; : &#123;      ...   &#125;,   &quot;FDutGe&quot; : &#123;      ...   &#125;,   &quot;FS7mk5&quot; : &#123;      ...   &#125;,   &quot;GMZqWq&quot; : &#123;      &quot;desc&quot; : &quot;kimi360.top&quot;,      ...   &#125;,   &quot;Thberd&quot; : &#123;      &quot;desc&quot; : &quot;Synology DDNS Certificate&quot;,      ...   &#125;,   &quot;r6JawJ&quot; : &#123;      ...   &#125;&#125;root@KIMI-NAS:/usr/syno/etc/certificate/_archive#</code></pre><p>文件为json格式，decs就是你之前填入的描述信息，找到对应的描述信息就能确定刚才维护进去的证书在那个文件夹下，比如我这里就是GMZqWq这个文件夹，当然也可以简单的通过文件夹的时间去判断。</p><p>确定了证书的位置后接下来的工作就简单了。定时将文件夹中的文件替换，授权就可以了。</p><h3 id="第三步，重启服务"><a href="#第三步，重启服务" class="headerlink" title="第三步，重启服务"></a>第三步，重启服务</h3><p>更新完证书后最后一步就是重启相关服务让证书生效了。因为我这里只使用到了群晖的反向代理服务，因此只需要重启nginx即可</p><pre><code class="shell">/usr/syno/bin/synosystemctl restart nginx</code></pre><p>重启的时间会比较长，中途可能出现部分服务无法访问的情况，重启完成后在浏览器中就可以看到正确的证书了</p><h2 id="脚本化"><a href="#脚本化" class="headerlink" title="脚本化"></a>脚本化</h2><p>接下来，将我们的操作脚本化。在下载文件后使用diff命令与原证书文件进行比较，只有发生变化的情况下才会做证书的更新，避免每次下载后都重新启动相关服务的尴尬</p><pre><code class="bash"># Synchronize and update certificate files from VPS#!/bin/bashdeclare -A CERT_FILE_LIST# 服务器端的证书位置REMOTE_PATH=...# 本地证书IDCERT_ID=# 临时目录TEMP_PATH=...# 证书目录CERT_PATH=/usr/syno/etc/certificate/_archive/$&#123;CERT_ID&#125;/# 证书对应关系CERT_FILE_LIST[&quot;fullchain.pem&quot;]=&quot;server.crt&quot;CERT_FILE_LIST[&quot;privkey.pem&quot;]=&quot;server.key&quot;CERT_FILE_LIST[&quot;cert.pem&quot;]=&quot;server.crt&quot;# 下载远端证书mkdir -p $&#123;TEMP_PATH&#125;for key in $&#123;!CERT_FILE_LIST[@]&#125;;do  scp root@vps:$&#123;REMOTE_PATH&#125;/$&#123;CERT_FILE_LIST[$&#123;key&#125;]&#125; $&#123;TEMP_PATH&#125;$&#123;key&#125;done# 比较证书目录与临时目录确定文件是否更新if ! diff $&#123;CERT_PATH&#125; $&#123;TEMP_PATH&#125; &gt; /dev/null;then  # 证书更新，替换证书，授权后重启相关服务  echo &quot;Found a new certificate&quot;  mv $&#123;TEMP_PATH&#125;*.pem $&#123;CERT_PATH&#125;  chown root:root $&#123;CERT_PATH&#125;*  chmod 600 $&#123;CERT_PATH&#125;*  /usr/syno/bin/synosystemctl restart nginxelse  echo &quot;The certificate is up-to-date&quot;fi# 删除临时目录rm -rf $&#123;TEMP_PATH&#125;</code></pre>]]></content:encoded>
+      
+      
+      <category domain="https://blog.kimi360.top/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</category>
+      
+      
+      
+      <comments>https://blog.kimi360.top/1ad1547eaf1c/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>脚本设置开始菜单显示的文件夹</title>
