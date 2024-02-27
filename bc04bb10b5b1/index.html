@@ -8,7 +8,7 @@
     
     <title>使用非ROOT用户挂载ossfs | Kimi&#39;s Blog</title>
 
-    <meta name="description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户">
+    <meta name="description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户&lt;/p&gt;">
     <meta name="keywords" content="">
 
     
@@ -16,17 +16,17 @@
     <meta property="og:locale" content="cn" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content= "使用非ROOT用户挂载ossfs | Kimi&#39;s Blog"  />
-    <meta property="og:description" content= "&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户" />
+    <meta property="og:description" content= "&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户&lt;/p&gt;" />
     <meta property="og:url" content="https://blog.kimi360.top/bc04bb10b5b1/index.html" />
     <meta property="og:site_name" content="" />
     <meta property="article:author" content="KIMI" />
     <meta property="article:publisher" content="" />
-    <meta property="og:description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户" />
+    <meta property="og:description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户&lt;/p&gt;" />
     <meta name="twitter:title" content="使用非ROOT用户挂载ossfs | Kimi&#39;s Blog"/>
-    <meta name="twitter:description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户"/>
+    <meta name="twitter:description" content="&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户&lt;/p&gt;"/>
     <script type="application/ld+json">
         {
-            "description": "&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户",
+            "description": "&lt;p&gt;公司的应用服务器迁移，考虑到安全问题要求使用非root用户启动应用。因此需要把阿里云oss挂载给非root用户&lt;/p&gt;",
             "author": { "@type": "Person", "name": "KIMI" },
             "@type": "BlogPosting",
             "url": "https://blog.kimi360.top/bc04bb10b5b1/index.html",
@@ -87,9 +87,9 @@
 
     </script>
 
-<meta name="generator" content="Hexo 5.4.2">
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="rss.xml" title="Kimi's Blog" type="application/rss+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="rss.xml" title="Kimi's Blog" type="application/rss+xml">
 </head>
 
 <body>
@@ -163,7 +163,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-cls2z1i0f0006m8joga0t90z1" class="article article-type-post" itemscope
+    <article id="post-clscx94ni000814jo7exn2jqc" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -245,7 +245,7 @@ uid=1000(support) gid=1000(support) groups=1000(support)
 # description: Activates/Deactivates ossfs configured to start at boot time.
 # 开机挂载oss，采用此种方式挂载避免修改/etc/fstab ，导致挂载失败而系统无法启动。
 # 加 -o allow_other 允许非root用户操作避免因权限问题导致无法操作oss目录
-su - support -c &quot;/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other -o mp_umask=022&quot;
+su - support -c "/usr/local/bin/ossfs $Bucket $Path -ourl=$URL -ouid=$UID -ogid=$GID -o passwd_file=$File -oallow_other -o mp_umask=022"
 </code></pre>
 </li>
 <li>设置执行权限和开机启动<pre><code class="bash">chmod +x ossfs 
