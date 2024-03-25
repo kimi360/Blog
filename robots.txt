@@ -1,6 +1,2 @@
 User-agent:*
-Allow:/categories
-Allow:/archives
-Disallow:/*/*/
-Disallow:/*/rss.xml$
-Sitemap:/sitemap.xml
+Sitemap:https://blog.kimi360.top/sitemap.xml
