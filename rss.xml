@@ -9,8 +9,29 @@
     <atom:link href="https://blog.kimi360.top/rss.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 08 Feb 2024 07:55:26 GMT</pubDate>
+    <pubDate>Tue, 28 May 2024 07:32:51 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>解决&#39;DeepSpeedCPUAdam&#39; object has no attribute &#39;ds_opt_adam&#39;</title>
+      <link>https://blog.kimi360.top/fea046133020/</link>
+      <guid>https://blog.kimi360.top/fea046133020/</guid>
+      <pubDate>Tue, 28 May 2024 06:13:08 GMT</pubDate>
+      
+      <description>&lt;p&gt;最近在研究大模型的训练，公司的四卡4090也爆显存。于是想要尝试一下使用deepspeed的zero3_offload,结果报错：‘DeepSpeedCPUAdam’ object has no attribute ‘ds_opt_adam’&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>最近在研究大模型的训练，公司的四卡4090也爆显存。于是想要尝试一下使用deepspeed的zero3_offload,结果报错：‘DeepSpeedCPUAdam’ object has no attribute ‘ds_opt_adam’</p><span id="more"></span><h2 id="CUDA版本检测"><a href="#CUDA版本检测" class="headerlink" title="CUDA版本检测"></a>CUDA版本检测</h2><pre><code class="bash">&gt;- Depsped Op Builder: Installed CUDA version 12.3 does not match the version torch was compiled with 11.7, unable to compile cuda/cpp extensions without a matching cuda version.……AttributeError: ‘DeepSpeedCPUAdam’ object has no attribute ‘ds_opt_adam’</code></pre><p>看错误提示应该是系统的CUDA版本和torch编译的版本不匹配。</p><p>根据文章：<a href="https://blog.csdn.net/qq_44193969/article/details/137051032">deepspeed使用zero3 + offload报错:AttributeError: “DeepSpeedCPUAdam” object has no attribute “ds_opt_adam”</a></p><p>在执行代码前添加环境变量,跳过版本检测</p><pre><code class="bash">export DS_SKIP_CUDA_CHECK=1</code></pre><h2 id="Ninja-build安装"><a href="#Ninja-build安装" class="headerlink" title="Ninja-build安装"></a>Ninja-build安装</h2><p>执行完成后重新尝试加载</p><pre><code class="bash">python -c 'import deepspeed; deepspeed.ops.adam.cpu_adam.CPUAdamBuilder().load()'</code></pre><p>报错中包含了一些Ninja相关的信息，尝试以下命令</p><pre><code class="bash">[root@gpu4 MGM]# ninja -vninja: error: loading 'build.ninja': no such file or directory</code></pre><p>看来需要重新安装ninja。参考：<a href="https://www.volcengine.com/theme/2492056-C-7-1">centos安装ninja</a></p><pre><code class="bash">yum install -y epel-releaseyum install -y ninja-build</code></pre><h2 id="GCC版本升级"><a href="#GCC版本升级" class="headerlink" title="GCC版本升级"></a>GCC版本升级</h2><p>再次重新尝试加载，提示GCC版本过低，需要安装5以上的版本。参考：<a href="https://www.cnblogs.com/jixiaohua/p/11732225.html">CentOS 7升级gcc版本</a></p><pre><code class="bash">yum install centos-release-sclyum install devtoolset-8-gcc* # 如果想要安装其他版本就把8改成其他的版本号scl enable devtoolset-8 bash</code></pre><p>大功告成，但是gcc版本只对本次会话有效，重启会话后还是会变回原来的4.8版本，后续想要切换版本的话直接执行</p><pre><code class="bash">source /opt/rh/devtoolset-8/enable</code></pre><h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>再次重新尝试加载，问题解决</p><pre><code class="bash">[root@gpu4 MGM]# python -c 'import deepspeed; deepspeed.ops.adam.cpu_adam.CPUAdamBuilder().load()'[2024-05-28 15:03:50,860] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect) [WARNING]  async_io requires the dev libaio .so object and headers but these were not found. [WARNING]  If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found. [WARNING]  Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH [WARNING]  sparse_attn requires a torch version &gt;= 1.5 and &lt; 2.0 but detected 2.0 [WARNING]  using untested triton version (2.0.0), only 1.0.0 is known to be compatible [WARNING]  DeepSpeed Op Builder: Installed CUDA version 12.3 does not match the version torch was compiled with 11.7.Detected `DS_SKIP_CUDA_CHECK=1`: Allowing this combination of CUDA, but it may result in unexpected behavior.Using /root/.cache/torch_extensions/py310_cu117 as PyTorch extensions root...Detected CUDA files, patching ldflagsEmitting ninja build file /root/.cache/torch_extensions/py310_cu117/cpu_adam/build.ninja...Building extension module cpu_adam...Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)ninja: no work to do.Loading extension module cpu_adam...Time to load cpu_adam op: 0.4856259822845459 seconds</code></pre>]]></content:encoded>
+      
+      
+      <category domain="https://blog.kimi360.top/categories/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/">经验分享</category>
+      
+      
+      
+      <comments>https://blog.kimi360.top/fea046133020/#disqus_thread</comments>
+      
+    </item>
     
     <item>
       <title>240201</title>
